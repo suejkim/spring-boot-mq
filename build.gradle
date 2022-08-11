@@ -50,12 +50,12 @@ subprojects {
 		implementation(
 				"org.projectlombok:lombok:${lombokVersion}",
 				'com.google.guava:guava:30.0-jre',
+				"org.springframework.boot:spring-boot-starter-undertow"
 		)
 
 		implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {
 			exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
 		}
-		implementation ("org.springframework.boot:spring-boot-starter-undertow")
 
 		testImplementation(
 				"org.junit.jupiter:junit-jupiter-api",

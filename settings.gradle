@@ -1,1 +1,15 @@
 rootProject.name = 'spring-boot-mq'
+
+
+["mq"].each {
+    def compDir = new File(rootDir, it)
+    if (!compDir.exists()) {
+        compDir.mkdirs()
+    }
+
+    compDir.eachDir { subDir ->
+        def projectName = ":${it}-${subDir.name}";
+        include projectName
+        project(projectName).projectDir = subDir
+    }
+}

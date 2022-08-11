@@ -1,32 +1,76 @@
-plugins {
-	id 'org.springframework.boot' version '2.7.2'
-	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
-	id 'java'
-}
-
-group = 'com.sjkim'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
+buildscript {
+	ext {
+		springBootVersion = '2.7.2'
+		lombokVersion = '1.18.24'
+		mockitoVersion = '3.9.0'
+	}
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+	dependencies {
+		classpath ("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath "io.spring.gradle:dependency-management-plugin"
 	}
 }
 
-repositories {
-	mavenCentral()
+allprojects {
+	group = 'com.sjkim'
+	version = '0.0.1-SNAPSHOT'
 }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-amqp'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.amqp:spring-rabbit-test'
-}
 
-tasks.named('test') {
-	useJUnitPlatform()
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+
+	sourceCompatibility = JavaVersion.VERSION_11
+	targetCompatibility = JavaVersion.VERSION_11
+
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+
+	configurations {
+		developmentOnly
+		runtimeClasspath {
+			extendsFrom developmentOnly
+		}
+	}
+
+	dependencies {
+		annotationProcessor(
+				"org.springframework.boot:spring-boot-configuration-processor",
+				"org.projectlombok:lombok:${lombokVersion}"
+		)
+		implementation(
+				"org.projectlombok:lombok:${lombokVersion}",
+				'com.google.guava:guava:30.0-jre',
+		)
+
+		implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {
+			exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
+		}
+		implementation ("org.springframework.boot:spring-boot-starter-undertow")
+
+		testImplementation(
+				"org.junit.jupiter:junit-jupiter-api",
+				"org.mockito:mockito-core:${mockitoVersion}",
+				"org.mockito:mockito-junit-jupiter:${mockitoVersion}",
+				"org.junit.jupiter:junit-jupiter-engine",
+				"org.springframework.boot:spring-boot-starter-test"
+		)
+		testAnnotationProcessor(
+				"org.projectlombok:lombok:${lombokVersion}"
+		)
+	}
+
+	test {
+		useJUnitPlatform()
+	}
+	help.enabled(false)
 }

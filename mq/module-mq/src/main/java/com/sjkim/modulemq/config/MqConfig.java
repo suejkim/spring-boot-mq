@@ -2,15 +2,16 @@ package com.sjkim.modulemq.config;
 
 import com.rabbitmq.client.ConnectionFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.Queue;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
 @Slf4j
 @Configuration
-@EnableConfigurationProperties(value = MqProperty.class)
+@EnableConfigurationProperties(value = {MqProperty.class, QueueProperty.class})
 public class MqConfig {
-
     @Bean
     public ConnectionFactory connectionFactory(MqProperty mqProperty) {
         var connectionFactory = new ConnectionFactory();
@@ -19,5 +20,10 @@ public class MqConfig {
         connectionFactory.setUsername(mqProperty.getUsername());
         connectionFactory.setPassword(mqProperty.getPassword());
         return connectionFactory;
+    }
+
+    @Bean
+    public Queue queue(QueueProperty queueProperty) {
+        return new Queue(queueProperty.getName(), queueProperty.isDurable());
     }
 }

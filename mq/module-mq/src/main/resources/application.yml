@@ -3,3 +3,6 @@ rabbitmq:
   port: 5672
   username: 'guest'
   password: 'guest'
+queue:
+  name: 'sample'
+  durable: true

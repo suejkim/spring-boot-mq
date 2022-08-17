@@ -11,15 +11,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ReceiveService {
 
-    @RabbitListener(queues = "${queue.name}")
-    public boolean receiveMessage(Message message) {
-        log.info("{}", message.toString());
-        return true;
-    }
+//    @RabbitListener(queues = "${queue.name}")
+//    public void receiveMessage(Message message) {
+//        log.info("receiveMessage {}", message.toString());
+//    }
 
-    @RabbitListener(queues = "${queue.name}")
-    public boolean receiveString(String message) {
-        log.info("{}", message);
-        return true;
-    }
+//    @RabbitListener(queues = "${queue.name}")
+//    public void receiveString(String message) {
+//        log.info("{}", message);
+//    }
 }

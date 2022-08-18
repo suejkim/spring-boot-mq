@@ -31,15 +31,14 @@ public class MqConfig {
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate(org.springframework.amqp.rabbit.connection.ConnectionFactory connectionFactory) {
-        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+        var rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
         return rabbitTemplate;
     }
 
-    // application/x-java-serialized-object -> application/json
-//    @Bean
-//    public Jackson2JsonMessageConverter jsonMessageConverter() {
-//        return new Jackson2JsonMessageConverter();
-//    }
+    /*
+    Jackson2JsonMessageConverter 설정하지 않으면 application/x-java-serialized-object
+    byte array -> Base64로 인코딩 된다.
+     */
 }

@@ -4,12 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.io.Serializable;
-
 @Getter
 @ToString
 @NoArgsConstructor
-public class QueueDto { // implements Serializable {
+public class QueueDto {
     private String index;
     private String name;
 

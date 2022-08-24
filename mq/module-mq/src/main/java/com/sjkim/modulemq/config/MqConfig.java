@@ -1,7 +1,10 @@
 package com.sjkim.modulemq.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -26,8 +29,33 @@ public class MqConfig {
     }
 
     @Bean
-    public Queue queue(QueueProperty queueProperty) {
-        return new Queue(queueProperty.getName(), queueProperty.isDurable());
+    public Queue queue() {
+        return new Queue("sample");
+    }
+
+    @Bean
+    public TopicExchange exchange() {
+        return new TopicExchange("sample-topic");
+    }
+
+    @Bean
+    public Queue sampleOneQueue() {
+        return new Queue("sample-one-queue");
+    }
+
+    @Bean
+    public Queue sampleTwoQueue() {
+        return new Queue("sample-two-queue");
+    }
+
+    @Bean
+    public Binding bindingSampleOne(Queue sampleOneQueue, TopicExchange exchange) {
+        return BindingBuilder.bind(sampleOneQueue).to(exchange).with("sample.one");
+    }
+
+    @Bean
+    public Binding bindingSampleTwo(Queue sampleTwoQueue, TopicExchange exchange) {
+        return BindingBuilder.bind(sampleTwoQueue).to(exchange).with("sample.two");
     }
 
     @Bean

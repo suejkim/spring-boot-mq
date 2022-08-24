@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 public class ReceiveService {
 
     // byte array로 받음
-    @RabbitListener(queues = "${queue.name}")
-    public void receiveMessage(Message message) {
-        log.info("receiveMessage {}", message.toString());
-    }
+//    @RabbitListener(queues = "${queue.name}")
+//    public void receiveMessage(Message message) {
+//        log.info("receiveMessage {}", message.toString());
+//    }
 
     // jsonString으로 그대로 받을 수 있음
 //    @RabbitListener(queues = "${queue.name}")

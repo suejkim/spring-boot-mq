@@ -24,4 +24,9 @@ public class SendService {
         // payload: {\"index\":\"6cb240f0-604d-4339-a489-d74e0e745242\",\"name\":\"TEST\"}"
         return true;
     }
+
+    public boolean sendSampleOneQueue(QueueDto queueDto) {
+        rabbitTemplate.convertAndSend("sample-topic", "sample.one", queueDto);
+        return true;
+    }
 }

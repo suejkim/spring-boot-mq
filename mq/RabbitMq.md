@@ -13,7 +13,7 @@
     - Binding: Exchage와 Queue간의 규칙
     - Broker(RabbitMQ)
 
-<img src="./images/rabbitmq-basic.png"/>
+<img src="./_images/rabbitmq-basic.png"/>
 
 ### 설치
 - Docker로 RabbitMQ 설치

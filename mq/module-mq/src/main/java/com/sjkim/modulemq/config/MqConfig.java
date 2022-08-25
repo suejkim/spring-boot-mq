@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Slf4j
 @Configuration
-@EnableConfigurationProperties(value = {MqProperty.class, QueueProperty.class})
+@EnableConfigurationProperties(value = {MqProperty.class, BasicQueueProperty.class, QueueProperty.class})
 public class MqConfig {
     @Bean
     public ConnectionFactory connectionFactory(MqProperty mqProperty) {
@@ -29,33 +29,33 @@ public class MqConfig {
     }
 
     @Bean
-    public Queue queue() {
-        return new Queue("sample");
+    public Queue queue(BasicQueueProperty property) {
+        return new Queue(property.getName(), property.isDurable());
     }
 
     @Bean
-    public TopicExchange exchange() {
-        return new TopicExchange("sample-topic");
+    public TopicExchange exchange(QueueProperty property) {
+        return new TopicExchange(property.getExchangeName());
     }
 
     @Bean
-    public Queue sampleOneQueue() {
-        return new Queue("sample-one-queue");
+    public Queue sampleOneQueue(QueueProperty property) {
+        return new Queue(property.getName1());
     }
 
     @Bean
-    public Queue sampleTwoQueue() {
-        return new Queue("sample-two-queue");
+    public Queue sampleTwoQueue(QueueProperty property) {
+        return new Queue(property.getName2());
     }
 
     @Bean
-    public Binding bindingSampleOne(Queue sampleOneQueue, TopicExchange exchange) {
-        return BindingBuilder.bind(sampleOneQueue).to(exchange).with("sample.one");
+    public Binding bindingSampleOne(Queue sampleOneQueue, TopicExchange exchange, QueueProperty property) {
+        return BindingBuilder.bind(sampleOneQueue).to(exchange).with(property.getRoutingKey1());
     }
 
     @Bean
-    public Binding bindingSampleTwo(Queue sampleTwoQueue, TopicExchange exchange) {
-        return BindingBuilder.bind(sampleTwoQueue).to(exchange).with("sample.two");
+    public Binding bindingSampleTwo(Queue sampleTwoQueue, TopicExchange exchange, QueueProperty property) {
+        return BindingBuilder.bind(sampleTwoQueue).to(exchange).with(property.getRoutingKey2());
     }
 
     @Bean

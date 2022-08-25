@@ -3,6 +3,12 @@ rabbitmq:
   port: 5672
   username: 'guest'
   password: 'guest'
-queue:
+queue1:
   name: 'sample'
   durable: true
+queue2:
+  name1: 'sample-one-queue'
+  name2: 'sample-two-queue'
+  exchange-name: 'sample-topic'
+  routing-key1: 'sample.one'
+  routing-key2: 'sample.two'

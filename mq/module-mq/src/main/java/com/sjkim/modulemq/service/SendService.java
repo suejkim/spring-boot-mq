@@ -31,4 +31,9 @@ public class SendService {
         rabbitTemplate.convertAndSend(queueProperty.getExchangeName(), queueProperty.getRoutingKey1(), queueDto);
         return true;
     }
+
+    public boolean sendSampleTwoQueue(QueueDto queueDto) {
+        rabbitTemplate.convertAndSend(queueProperty.getExchangeName(), queueProperty.getRoutingKey2(), queueDto);
+        return true;
+    }
 }

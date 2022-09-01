@@ -12,6 +12,7 @@
         - Type: Direct, Fanout, Topic, Headers Exchange
     - Binding: Exchage와 Queue간의 규칙
     - Broker(RabbitMQ)
+- RabbitMQ는 Exchange Type을 기반으로 다른 큐에 유연하게 라우팅할 수 있다.
 
 <img src="./_images/rabbitmq-basic.png"/>
 
